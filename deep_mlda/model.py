@@ -17,7 +17,7 @@ class Model(nn.Module):
         self.z_to_x = ImageDecoder(self.x_dim, self.h_dim, self.z_dim)
         self.z_to_w = TextDecoder(self.w_dim, self.h_dim, self.z_dim)
 
-        self.softmax = nn.Softmax(dim=0)
+        self.softmax = nn.Softmax(dim=1)
     
     def reparameterize(self, mu, logvar, mode):
         if mode:
@@ -32,6 +32,6 @@ class Model(nn.Module):
         mu, logvar = self.xw_to_z(xw)
         z = self.reparameterize(mu, logvar, mode)
         theta = self.softmax(z)
-        xh = self.z_to_x(z)
-        wh = self.z_to_w(z)
+        xh = self.z_to_x(theta)
+        wh = self.z_to_w(theta)
         return mu, logvar, z, theta, xh, wh
