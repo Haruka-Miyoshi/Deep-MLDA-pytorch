@@ -31,7 +31,7 @@ class Model(nn.Module):
         xw = torch.cat((x, w), dim=1)
         mu, logvar = self.xw_to_z(xw)
         z = self.reparameterize(mu, logvar, mode)
-        phi = self.softmax(z)
+        theta = self.softmax(z)
         xh = self.z_to_x(z)
         wh = self.z_to_w(z)
-        return mu, logvar, phi, z, xh, wh
+        return mu, logvar, z, theta, xh, wh

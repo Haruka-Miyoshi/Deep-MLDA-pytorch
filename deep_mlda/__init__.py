@@ -74,7 +74,7 @@ class DeepMLDA(object):
                 self.optim.zero_grad()
                 x = batch_data.view(batch_data.size(0), self.x_dim).to(device=self.device)
                 w = F.one_hot(label, self.K).float().to(device=self.device)
-                mu, logvar, pi, z, xh, wh = self.model(x, w, True)
+                mu, logvar, z, theta, xh, wh = self.model(x, w, True)
                 loss = ( self.KLD(mu, logvar) + self.BCE(xh, x) + self.BCE(wh, w) ).mean()
                 loss.backward()
                 total_loss += loss.item()
@@ -93,5 +93,5 @@ class DeepMLDA(object):
     def xw_to_z_to_xhwh(self, x, w):
         self.model.eval() # 推論モード        
         with torch.no_grad():
-            mu, logvar, phi, z, xh, wh = self.model(x, w, False)
-        return mu, logvar, phi, z, xh, wh
+            mu, logvar, z, theta, xh, wh = self.model(x, w, False)
+        return mu, logvar, z, theta, xh, wh
