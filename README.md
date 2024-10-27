@@ -1,6 +1,6 @@
 # **Deep-MLDA**
-The MLDA is a topic model that extends Latent Dirichlet Allocation for multimodal learning, developed primarily as a multimodal model to address the symbol grounding problem in robotics [nakamura2011grounding].<br>
-In recent years, models that extend MLDA to a deep learning-based framework have been proposed [Tatsuya AOKI2019].<br>
+The MLDA is a topic model that extends Latent Dirichlet Allocation for multimodal learning, developed primarily as a multimodal model to address the symbol grounding problem in robotics [[nakamura2011grounding](https://www.tandfonline.com/doi/abs/10.1163/016918611X595035)].<br>
+In recent years, models that extend MLDA to a deep learning-based framework have been proposed [[Tatsuya AOKI2019](https://www.jstage.jst.go.jp/article/pjsai/JSAI2019/0/JSAI2019_1I4J204/_article/-char/en)].<br>
 This repository provides a program implementing Deep MLDA in PyTorch.<br>
 In `main.ipynb`, the repository also includes training on the MNIST dataset using the DeepMLDA module, along with evaluations of reconstructed images and assessments of the latent variable space.
 

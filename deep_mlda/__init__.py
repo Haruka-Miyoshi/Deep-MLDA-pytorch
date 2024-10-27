@@ -6,7 +6,7 @@ import os
 from .model import *
 
 class DeepMLDA(object):
-    def __init__(self, x_dim:int, w_dim:int, h_dim:int, K:int, lr:float=3e-4, train_mode:bool=True, save_path="param", model_path="deeplda_parameter.path"):
+    def __init__(self, x_dim:int, w_dim:int, h_dim:int, K:int, lr:float=3e-4, train_mode:bool=True, save_path="param", model_path="deep_mlda_parameter.path"):
         self.x_dim = x_dim # 入力画像の次元数
         self.w_dim = w_dim # 入力単語の次元数
         self.h_dim = h_dim # 隠れ変数次元数
