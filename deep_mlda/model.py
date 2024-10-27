@@ -13,7 +13,7 @@ class Model(nn.Module):
         self.h_dim = h_dim
         self.z_dim = z_dim
 
-        self.xw_to_z = Encoder(self.x_dim +  self.w_dim, self.h_dim, self.z_dim)
+        self.xw_to_z = Encoder(self.x_dim + self.w_dim, self.h_dim, self.z_dim)        
         self.z_to_x = ImageDecoder(self.x_dim, self.h_dim, self.z_dim)
         self.z_to_w = TextDecoder(self.w_dim, self.h_dim, self.z_dim)
 
@@ -27,6 +27,18 @@ class Model(nn.Module):
         else:
             return mu
     
+    def encode(self, x, w, mode):
+        xw = torch.cat((x, w), dim=1)
+        mu, logvar = self.xw_to_z(xw)
+        z = self.reparameterize(mu, logvar, mode)
+        theta = self.softmax(z)
+        return mu, logvar, z, theta
+    
+    def decode(self, theta):
+        xh = self.z_to_x(theta)
+        wh = self.z_to_w(theta)
+        return xh, wh
+
     def forward(self, x, w, mode):
         xw = torch.cat((x, w), dim=1)
         mu, logvar = self.xw_to_z(xw)

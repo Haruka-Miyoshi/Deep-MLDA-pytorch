@@ -39,9 +39,7 @@ class DeepMLDA(object):
         self.lr = lr
         self.optim = torch.optim.Adam([{'params':self.model.parameters()}], lr=self.lr)
         self.losses = []
-
-        self.softmax = nn.Softmax(dim=1)
-    
+        
     def tensor(self, x, dtype=torch.float32):
         return torch.tensor(x, dtype=dtype, device=self.device)
     
@@ -95,3 +93,15 @@ class DeepMLDA(object):
         with torch.no_grad():
             mu, logvar, z, theta, xh, wh = self.model(x, w, False)
         return mu, logvar, z, theta, xh, wh
+    
+    def xw_to_theta(self, x, w):
+        self.model.eval()
+        with torch.no_grad():
+            mu, logvar, z, theta = self.model.encode(x, w, False)
+        return mu, logvar, z, theta
+    
+    def theta_to_xw(self, theta):
+        self.model.eval()
+        with torch.no_grad():
+            xh, wh = self.model.decode(theta)
+        return xh, wh
